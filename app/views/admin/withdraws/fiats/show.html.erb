@@ -17,9 +17,9 @@
               <%= @withdraw.member.email %>
             </span>
           <% end %>
-          <%= item_for @withdraw.destination, :label do %>
-            <span class="fa fa-copy" data-clipboard-text="<%= @withdraw.destination.label %>">
-              <%= @withdraw.destination.label %>
+          <%= item_for @withdraw, 'Recipient ID' do %>
+            <span class="fa fa-copy" data-clipboard-text="<%= @withdraw.rid %>">
+              <%= @withdraw.rid %>
             </span>
           <% end %>
           <%= item_for @withdraw, :amount do %>
@@ -28,33 +28,15 @@
             </span>
           <% end %>
           <hr class="split">
-          <% @withdraw.destination.details.each do |name, value| %>
-            <%= item_for @withdraw, name.titleize do %>
-              <span class="fa fa-copy" data-clipboard-text="<%= value %>">
-                <%= value %>
-              </span>
-            <% end %>
-          <% end %>
-          <hr class="split">
           <ul class="list-inline pull-right">
-            <% if @withdraw.may_accept? %>
+            <% if @withdraw.may_accept? || @withdraw.may_process? %>
               <li>
-                <%= link_to 'Accept', admin_withdraw_path(@withdraw.currency.code, @withdraw), class: 'btn btn-primary', method: 'PATCH' %>
+                <%= link_to 'Process', admin_withdraw_path(@withdraw.currency.code, @withdraw), class: 'btn btn-primary', method: 'PATCH' %>
               </li>
             <% end %>
             <% if @withdraw.may_reject? %>
               <li>
-                <%= link_to t('.reject'), admin_withdraw_path(@withdraw.currency.code, @withdraw), class: 'btn btn-danger', method: 'DELETE', confirm: t('.reject_confirm') %>
-              </li>
-            <% end %>
-            <% if @withdraw.may_process? %>
-              <li>
-                <%= link_to t('.process'), admin_withdraw_path(@withdraw.currency.code, @withdraw), class: 'btn btn-primary', method: 'PATCH' %>
-              </li>
-            <% end %>
-            <% if @withdraw.may_succeed? %>
-              <li>
-                <%= link_to t('.succeed'), admin_withdraw_path(@withdraw.currency.code, @withdraw), class: 'btn btn-success', method: 'PATCH', confirm: t('.succeed_confirm') %>
+                <%= link_to 'Reject', admin_withdraw_path(@withdraw.currency.code, @withdraw), class: 'btn btn-danger', method: 'DELETE' %>
               </li>
             <% end %>
           </ul>

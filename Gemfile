@@ -1,4 +1,5 @@
 source 'https://rubygems.org'
+git_source(:github) { |repo_name| "https://github.com/#{repo_name}" }
 
 gem 'rails', '~> 4.2'
 gem 'rails-i18n'
@@ -76,6 +77,7 @@ gem 'ejs','~> 1.1'
 gem 'jwt-multisig', '~> 1.0'
 
 group :development, :test do
+  gem 'bullet', '~> 5.7'
   gem 'factory_bot_rails'
   gem 'faker', '~> 1.8'
   gem 'binding_of_caller'
